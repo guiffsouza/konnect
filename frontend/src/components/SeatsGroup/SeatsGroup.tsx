@@ -5,7 +5,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { GenericTab } from "../GenericTab/GenericTab";
 import { useOrderContext } from "@/context/OrderContext/useOrder";
-import { ITicket } from "@/Shared/Interfaces/interface";
+import { ITicketSeat } from "@/Shared/Interfaces/interface";
 import { QueueTicket } from "../QueueTicket/QueueTicket";
 
 export function SeatsGroup() {
@@ -27,7 +27,7 @@ export function SeatsGroup() {
       <Box sx={{ width: "100%" }}>
         <GenericTab value={value} index={0}>
           <div className="flex flex-row flex-wrap items-center justify-start">
-            {seats.map((seat: ITicket) => (
+            {seats.map((seat: ITicketSeat) => (
               <Seat key={seat.id} {...seat} />
             ))}
           </div>

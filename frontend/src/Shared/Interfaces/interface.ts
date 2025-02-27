@@ -1,4 +1,4 @@
-export interface ITicket {
+export interface ITicketSeat {
   id: string;
   position: string;
   selected?: boolean;

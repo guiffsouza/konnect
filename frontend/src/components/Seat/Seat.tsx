@@ -1,7 +1,7 @@
 import { useOrderContext } from "@/context/OrderContext/useOrder";
-import { ITicket } from "../../Shared/Interfaces/interface";
+import { ITicketSeat } from "../../Shared/Interfaces/interface";
 
-export function Seat({ id, position, value, selected }: ITicket) {
+export function Seat({ id, position, value, selected }: ITicketSeat) {
   const { selectionSeat } = useOrderContext();
 
   const handleClick = () => {

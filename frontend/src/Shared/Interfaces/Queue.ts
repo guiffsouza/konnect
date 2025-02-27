@@ -1,4 +1,5 @@
-export interface IQueue {
+export interface ITicketsQueue {
   id: string;
-  valor: number;
+  selected: boolean;
+  value: number;
 }

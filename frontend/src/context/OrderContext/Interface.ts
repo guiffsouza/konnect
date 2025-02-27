@@ -1,9 +1,11 @@
-import { ITicket } from "@/Shared/Interfaces/interface";
-import { IQueue } from "@/Shared/Interfaces/Queue";
+import { ICart } from "@/Shared/Interfaces/ICart";
+import { ITicketSeat } from "@/Shared/Interfaces/interface";
+import { ITicketsQueue } from "@/Shared/Interfaces/Queue";
 
 export interface IOrderContext {
-  selectionSeat: (value: ITicket) => void;
-  ticktQueue: IQueue[];
-  seats: ITicket[];
-  cart: ITicket[];
+  removeTicketQueueCart: () => void;
+  selectTicketQueue: () => void;
+  selectionSeat: (value: ITicketSeat) => void;
+  seats: ITicketSeat[];
+  cart: ICart;
 }

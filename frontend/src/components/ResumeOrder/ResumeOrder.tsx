@@ -18,14 +18,14 @@ export function ResumeOrder() {
       <div className="flex flex-col justify-between">
         <div className="flex flex-col items-start justify-around mb-4">
           <text className="mb-4">Assentos selecionados</text>
-          {cart.length >= 1 ? (
-            <div className="flex flex-row flex-wrap h-[220px] overflow-y-scroll w-[100%] p-2 border-2 border-dashed">
-              {cart.map((seat) => (
+          {cart.ticketSeat.length >= 1 ? (
+            <div className="flex flex-row flex-wrap h-[160px] overflow-y-scroll w-[100%] p-2 border-2 border-dashed">
+              {cart.ticketSeat.map((seat) => (
                 <Seat {...seat} />
               ))}
             </div>
           ) : (
-            <div className="h-[220px] w-[100%] flex justify-center items-center border-2 border-dashed">
+            <div className="h-[160px] w-[100%] flex justify-center items-center border-2 border-dashed">
               <text>Selecione os assentos</text>
             </div>
           )}
@@ -34,19 +34,38 @@ export function ResumeOrder() {
         <div className="flex flex-col items-start justify-around mb-8">
           <div className="w-[100%]">
             <text className="mb-4">Pista selecionados</text>
-
-            <div className="flex justify-center items-center border-2 border-dashed mb-4 p-2">
-              <text>Selecione os assentos</text>
-            </div>
+            {cart.ticketQueue.length >= 1 ? (
+              <div className="flex flex-row flex-wrap h-[100px] overflow-y-scroll w-[100%] p-2 border-2 border-dashed">
+                {cart.ticketQueue.map((_) => (
+                  <span
+                    className="material-symbols-outlined rotate-90"
+                    style={{ fontSize: "32px" }}
+                  >
+                    confirmation_number
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <div className="h-[100px] w-[100%] flex justify-center items-center border-2 border-dashed">
+                <text>Selecione os tickets</text>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       <div>
         <div className="flex flex-col">
-          <text className="text-lg mb-4">Ingresso: {cart.length}</text>
+          <text className="text-lg mb-4">
+            Ingresso no Assento: {cart.ticketSeat.length}
+          </text>
+          <text className="text-lg mb-4">
+            Ingresso na pista: {cart.ticketQueue.length}
+          </text>
           <text className="text-xl mb-4">
-            Total: R$ {cart.reduce((sum, newSeat) => sum + newSeat.value, 0)}
+            Total: R${" "}
+            {cart.ticketSeat.reduce((sum, newSeat) => sum + newSeat.value, 0) +
+              cart.ticketQueue.reduce((sum, ticket) => sum + ticket.value, 0)}
           </text>
         </div>
         <Button variant="outlined" fullWidth onClick={handleClick}>
