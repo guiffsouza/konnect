@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_konnect
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: konnect_db
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb_data:/data/dbd
+
+volumes:
+  mongodb_data:
+    driver: local
