@@ -21,7 +21,7 @@ export function ResumeOrder() {
           {cart.ticketSeat.length >= 1 ? (
             <div className="flex flex-row flex-wrap h-[160px] overflow-y-scroll w-[100%] p-2 border-2 border-dashed">
               {cart.ticketSeat.map((seat) => (
-                <Seat {...seat} />
+                <Seat key={seat.id} {...seat} />
               ))}
             </div>
           ) : (
@@ -40,6 +40,7 @@ export function ResumeOrder() {
                   <span
                     className="material-symbols-outlined rotate-90"
                     style={{ fontSize: "32px" }}
+                    key={_.id}
                   >
                     confirmation_number
                   </span>
