@@ -6,17 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { TicketSeatService } from './ticket-seat.service';
+import { TicketSeat } from 'src/Schema/ticket-seat';
 
 @Controller('ticket-seat')
 export class TicketSeatController {
   constructor(private readonly ticketSeatService: TicketSeatService) {}
-
-  @Post()
-  create() {
-    return this.ticketSeatService.create();
-  }
 
   @Get()
   findAll() {
@@ -25,19 +22,16 @@ export class TicketSeatController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.ticketSeatService.findOne(+id);
+    return this.ticketSeatService.findOne(id);
   }
 
-  // @Patch(':id')
-  // update(
-  //   @Param('id') id: string,
-  //   @Body() updateTicketSeatDto: UpdateTicketSeatDto,
-  // ) {
-  //   return this.ticketSeatService.update(+id, updateTicketSeatDto);
-  // }
+  @Put()
+  update(@Body() ticketSeat: TicketSeat[]) {
+    return this.ticketSeatService.update(ticketSeat);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.ticketSeatService.remove(+id);
+    return this.ticketSeatService.remove(id);
   }
 }
