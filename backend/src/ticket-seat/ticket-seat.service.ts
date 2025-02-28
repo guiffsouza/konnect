@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { TicketSeat } from 'src/Schema/ticket-seat';
+import { TicketSeat } from 'src/Schemas/ticket-seat';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -20,18 +20,22 @@ export class TicketSeatService {
     }
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} ticketSeat`;
-  }
-
   async update(ticketSeat: TicketSeat[]) {
     try {
+      const availableTickets = await this.TicketModel.find({ sold: false });
+      if (availableTickets.length === 0) {
+        throw new HttpException(
+          { message: 'Seats sould out' },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
       const ticketsIds = ticketSeat.map((ticket: any) => ticket.id);
       const tickets = await this.TicketModel.find({ _id: { $in: ticketsIds } });
-      const isValid = tickets.every((item) => item.sold === false);
 
-      if (!isValid) {
-        const soldSeats = tickets
+      const soldSeats = tickets.every((ticket) => ticket.sold === false);
+      if (!soldSeats) {
+        const errorMessages = tickets
           .filter((ticket: TicketSeat) => ticket.sold === true)
           .map(
             (ticket: TicketSeat) =>
@@ -39,22 +43,15 @@ export class TicketSeatService {
           );
 
         throw new HttpException(
-          { message: 'Seat unavailable', error: soldSeats },
+          { message: 'Seat unavailable', error: errorMessages },
           HttpStatus.BAD_REQUEST,
         );
       }
 
-      const batch = ticketSeat.map((item: any) => ({
+      const batch = ticketSeat.map((ticket: any) => ({
         updateOne: {
-          filter: { _id: item.id },
-          update: {
-            $set: {
-              position: item.position,
-              selected: item.selected,
-              sold: item.sold,
-              value: item.value,
-            },
-          },
+          filter: { _id: ticket.id },
+          update: { $set: { ...ticket } },
         },
       }));
 
@@ -62,9 +59,5 @@ export class TicketSeatService {
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
-  }
-
-  remove(id: string) {
-    return `This action removes a #${id} ticketSeat`;
   }
 }
