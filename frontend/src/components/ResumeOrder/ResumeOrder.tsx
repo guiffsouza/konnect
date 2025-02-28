@@ -11,12 +11,22 @@ export function ResumeOrder() {
 
   const handleClick = async () => {
     try {
-      if (cart.ticketSeat.length > 0) {
-        await api.put("ticket-seat", cart.ticketSeat);
-        setErrors([{ message: "" }]);
-        nextStep();
-        fetchApi();
-        return;
+      if (cart.ticketSeat.length > 0 || cart.ticketQueue.length > 0) {
+        if (cart.ticketSeat.length > 0) {
+          await api.put("ticket-seat", cart.ticketSeat);
+          setErrors([{ message: "" }]);
+          nextStep();
+          fetchApi();
+          return;
+        }
+
+        if (cart.ticketQueue.length > 0) {
+          console.log(cart.ticketQueue);
+          await api.put("ticket-queue", cart.ticketQueue);
+          nextStep();
+          fetchApi();
+          return;
+        }
       }
       setErrors((prev) => {
         return [

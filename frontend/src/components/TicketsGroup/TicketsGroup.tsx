@@ -8,7 +8,7 @@ import { useOrderContext } from "@/context/OrderContext/useOrder";
 import { ITicketSeat } from "@/Shared/Interfaces/ITicketSeat";
 import { QueueTicket } from "../QueueTicket/QueueTicket";
 
-export function SeatsGroup() {
+export function TicketsGroup() {
   const [value, setValue] = useState(0);
   const { seats } = useOrderContext();
 
@@ -17,7 +17,7 @@ export function SeatsGroup() {
   };
 
   return (
-    <div className="flex flex-row flex-wrap items-start justify-center bg-[#1d202a] ml-4 mr-2 p-4 rounded-md w-[70%]">
+    <div className="flex flex-row flex-wrap items-start justify-center bg-[#1d202a] ml-4 mr-2 p-4 rounded-md flex-1">
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange} centered>
           <Tab label="Cadeira" sx={{ color: "#fff" }} />

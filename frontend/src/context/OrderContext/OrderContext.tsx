@@ -2,7 +2,6 @@
 
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { IOrderContext } from "./Interface";
-import { mockTicketsQueue } from "@/mock/seats";
 import { ITicketSeat } from "@/Shared/Interfaces/ITicketSeat";
 import { ITicketQueue } from "@/Shared/Interfaces/ITicketQueue";
 import { ICart } from "@/Shared/Interfaces/ICart";
@@ -14,8 +13,7 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [seats, setSeat] = useState<ITicketSeat[]>([]);
 
-  const [ticketQueue, setTicketQuery] =
-    useState<ITicketQueue[]>(mockTicketsQueue);
+  const [ticketQueue, setTicketQuery] = useState<ITicketQueue[]>([]);
 
   const [cart, setCart] = useState<ICart>({
     ticketQueue: [],
@@ -24,8 +22,11 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({
 
   const fetchApi = async () => {
     try {
-      const res = await api.get("/ticket-seat");
-      setSeat(res.data);
+      const resTicketSeat = await api.get("/ticket-seat");
+      const resTicketQueue = await api.get("/ticket-queue/available");
+
+      setSeat(resTicketSeat.data);
+      setTicketQuery(resTicketQueue.data);
     } catch (error) {
       console.error(error);
     }
@@ -63,17 +64,32 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({
   const selectTicketQueue = () => {
     if (ticketQueue.length > 0) {
       const newTicket = ticketQueue.shift();
-      addToCart("ticketQueue", newTicket as ITicketQueue);
+      addToCart("ticketQueue", {
+        ...newTicket,
+        selected: true,
+        sold: true,
+      } as ITicketQueue);
     }
   };
 
   const removeTicketQueueCart = () => {
-    if (cart.ticketQueue.length > 0) {
-      const newTicketQueue = [...cart.ticketQueue];
-      newTicketQueue.pop();
+    setCart((prevCart) => {
+      if (prevCart.ticketQueue.length === 0) return prevCart;
 
-      setCart((prevCart) => ({ ...prevCart, ticketQueue: newTicketQueue }));
-    }
+      const removedTicket =
+        prevCart.ticketQueue[prevCart.ticketQueue.length - 1];
+
+      const newTicketQueue = prevCart.ticketQueue.slice(0, -1);
+
+      setTicketQuery((prevQueue) => {
+        if (!prevQueue.some((ticket) => ticket.id === removedTicket.id)) {
+          return [...prevQueue, removedTicket];
+        }
+        return prevQueue;
+      });
+
+      return { ...prevCart, ticketQueue: newTicketQueue };
+    });
   };
 
   const addToCart = <K extends keyof typeof cart>(
@@ -100,6 +116,7 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({
         removeTicketQueueCart,
         selectTicketQueue,
         selectionSeat,
+        ticketQueue,
         fetchApi,
         seats,
         cart,

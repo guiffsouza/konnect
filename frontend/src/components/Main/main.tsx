@@ -1,7 +1,7 @@
 "use client";
 
 import { Header } from "../Header/Header";
-import { SeatsGroup } from "../SeatsGroup/SeatsGroup";
+import { TicketsGroup } from "../TicketsGroup/TicketsGroup";
 import { ResumeOrder } from "../ResumeOrder/ResumeOrder";
 import { useStepContext } from "@/context/StepContext/useStep";
 import { Payment } from "../Payment/Payment";
@@ -15,7 +15,7 @@ export default function Main() {
       <div className="w-[1440px]">
         <Header />
         <div className="flex w-[1440px]">
-          <SeatsGroup />
+          <TicketsGroup />
           {steps[step]}
         </div>
       </div>
