@@ -1,7 +1,7 @@
-import { ITicketSeat } from "./interface";
-import { ITicketsQueue } from "./Queue";
+import { ITicketSeat } from "./ITicketSeat";
+import { ITicketQueue } from "./ITicketQueue";
 
 export interface ICart {
   ticketSeat: ITicketSeat[];
-  ticketQueue: ITicketsQueue[];
+  ticketQueue: ITicketQueue[];
 }

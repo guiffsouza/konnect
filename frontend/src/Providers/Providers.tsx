@@ -7,8 +7,8 @@ export function Providers({
   children: React.ReactNode;
 }>) {
   return (
-    // <StepProvider>
-    <OrderProvider>{children}</OrderProvider>
-    // </StepProvider>
+    <StepProvider>
+      <OrderProvider>{children}</OrderProvider>
+    </StepProvider>
   );
 }

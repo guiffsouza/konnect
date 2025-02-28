@@ -1,46 +1,69 @@
 "use client";
 
-import React, { createContext, ReactNode, useState } from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { IOrderContext } from "./Interface";
-import { mockTicketsSeats, mockTicketsQueue } from "@/mock/seats";
-import { ITicketSeat } from "@/Shared/Interfaces/interface";
-import { ITicketsQueue } from "@/Shared/Interfaces/Queue";
+import { mockTicketsQueue } from "@/mock/seats";
+import { ITicketSeat } from "@/Shared/Interfaces/ITicketSeat";
+import { ITicketQueue } from "@/Shared/Interfaces/ITicketQueue";
 import { ICart } from "@/Shared/Interfaces/ICart";
+import { api } from "@/api/api";
 
 export const OrderContext = createContext<IOrderContext | undefined>(undefined);
 export const OrderProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [seats, setSeat] = useState<ITicketSeat[]>(mockTicketsSeats);
+  const [seats, setSeat] = useState<ITicketSeat[]>([]);
 
   const [ticketQueue, setTicketQuery] =
-    useState<ITicketsQueue[]>(mockTicketsQueue);
+    useState<ITicketQueue[]>(mockTicketsQueue);
 
   const [cart, setCart] = useState<ICart>({
     ticketQueue: [],
     ticketSeat: [],
   });
 
-  const selectionSeat = (newSeat: ITicketSeat) => {
-    setSeat((prevSeat) => {
-      return prevSeat.map((seat) =>
-        seat.id === newSeat.id ? { ...seat, selected: !newSeat.selected } : seat
-      );
-    });
-
-    if (!newSeat.selected) {
-      addToCart("ticketSeat", newSeat);
+  const fetchApi = async () => {
+    try {
+      const res = await api.get("/ticket-seat");
+      setSeat(res.data);
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    if (newSeat.selected) {
-      removeToCart(newSeat);
+  useEffect(() => {
+    fetchApi();
+  }, []);
+
+  const selectionSeat = (newSeat: ITicketSeat) => {
+    if (!newSeat.sold) {
+      setSeat((prevSeat) => {
+        return prevSeat.map((seat) =>
+          seat.id === newSeat.id
+            ? { ...seat, selected: !newSeat.selected }
+            : seat
+        );
+      });
+
+      if (!newSeat.selected) {
+        const found = seats.find((seat) => seat.id === newSeat.id);
+        addToCart("ticketSeat", {
+          ...found,
+          selected: true,
+          sold: true,
+        } as ITicketSeat);
+      }
+
+      if (newSeat.selected) {
+        removeToCart(newSeat);
+      }
     }
   };
 
   const selectTicketQueue = () => {
     if (ticketQueue.length > 0) {
       const newTicket = ticketQueue.shift();
-      addToCart("ticketQueue", newTicket as ITicketsQueue);
+      addToCart("ticketQueue", newTicket as ITicketQueue);
     }
   };
 
@@ -77,6 +100,7 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({
         removeTicketQueueCart,
         selectTicketQueue,
         selectionSeat,
+        fetchApi,
         seats,
         cart,
       }}

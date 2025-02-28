@@ -5,7 +5,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { GenericTab } from "../GenericTab/GenericTab";
 import { useOrderContext } from "@/context/OrderContext/useOrder";
-import { ITicketSeat } from "@/Shared/Interfaces/interface";
+import { ITicketSeat } from "@/Shared/Interfaces/ITicketSeat";
 import { QueueTicket } from "../QueueTicket/QueueTicket";
 
 export function SeatsGroup() {

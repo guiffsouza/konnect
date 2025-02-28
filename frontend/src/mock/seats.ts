@@ -1,5 +1,5 @@
-import { ITicketsQueue } from "@/Shared/Interfaces/Queue";
-import { ITicketSeat } from "../Shared/Interfaces/interface";
+import { ITicketQueue } from "@/Shared/Interfaces/ITicketQueue";
+import { ITicketSeat } from "../Shared/Interfaces/ITicketSeat";
 
 const generateSeats = (): ITicketSeat[] => {
   return Array.from({ length: 100 }, (_, index) => ({
@@ -12,7 +12,7 @@ const generateSeats = (): ITicketSeat[] => {
 
 export const mockTicketsSeats = generateSeats();
 
-const generateQueueTickets = (): ITicketsQueue[] => {
+const generateQueueTickets = (): ITicketQueue[] => {
   return Array.from({ length: 100 }, (_, index) => ({
     id: (index + 1).toString(),
     selected: false,
