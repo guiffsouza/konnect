@@ -23,8 +23,11 @@ docker-compose up --build -d
 ```
 
 Acesse o client em: `http://localhost:3000` </br>
-Acesse a api em: `http://localhost:8000`
+Acesse a api em: `http://localhost:8000` </br>
 
 ## Postman Collection
+
+O Ticket Seat representa o ingresso para o setor com cadeiras </br>
+O Ticket Queue representa o ingresso para a pista </br>
 
 Link com para o Postman: [https://www.postman.com/solar-escape-339420/workspace/konnect/collection/17205015-e4fa994d-c592-480f-97c7-b2f016dffa15?action=share&creator=17205015](https://www.postman.com/solar-escape-339420/workspace/konnect/collection/17205015-e4fa994d-c592-480f-97c7-b2f016dffa15?action=share&creator=17205015)
