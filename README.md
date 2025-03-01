@@ -1,3 +1,7 @@
+# Desafio 2: Compra de ingressos para show
+
+Desenvolver uma aplicação web que permita aos usuários comprar ingressos para um show. O show possui dois setores, com preços distintos: pista (sem reserva de lugar) e cadeira (com reserva do número da cadeira). A aplicação deve permitir ao usuário comprar quantos ingressos quiser, exibindo o valor total dos ingressos selecionados. A aplicação deve atualizar em tempo real a quantidade de ingressos disponíveis em cada setor, além de exibir as cadeiras já ocupadas e as cadeiras disponíveis para compra. Não é necessário desenvolver o fluxo de pagamento, apenas uma simulação de compra.
+
 ## Decisões técnicas
 
 O React é facilita a criação de componentes interativos no frontend, como formulários de compra de ingressos, onde a experiência do usuário é fluida e dinâmica.
@@ -6,7 +10,7 @@ O NestJS oferece uma estrutura modular baseada em TypeScript que facilita a manu
 
 O MongoDB, sendo um banco de dados NoSQL, é ideal para dados de eventos, shows e ingressos, que podem variar de estrutura e crescer de forma escalável.
 
-MongoDB oferece alta disponibilidade e capacidade de escalabilidade horizontal, o que é importante para um sistema de ingressos que pode ter picos de tráfego em dias de shows populares.
+MongoDB oferece alta disponibilgidade e capacidade de escalabilidade horizontal, o que é importante para um sistema de ingressos que pode ter picos de tráfego em dias de shows populares.
 
 Tailwind CSS permite um design rápido e personalizável. Você pode criar interfaces responsivas e modernas sem a necessidade de escrever muito CSS customizado.
 
