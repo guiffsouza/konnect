@@ -8,9 +8,7 @@ O React é facilita a criação de componentes interativos no frontend, como for
 
 O NestJS oferece uma estrutura modular baseada em TypeScript que facilita a manutenção e escalabilidade da aplicação. O NestJS também facilita a criação da APIs RESTful.
 
-O MongoDB, sendo um banco de dados NoSQL, é ideal para dados de eventos, shows e ingressos, que podem variar de estrutura e crescer de forma escalável.
-
-MongoDB oferece alta disponibilgidade e capacidade de escalabilidade horizontal, o que é importante para um sistema de ingressos que pode ter picos de tráfego em dias de shows populares.
+O MongoDB, sendo um banco de dados NoSQL, é ideal para dados de eventos, shows e ingressos, que podem variar de estrutura e crescer de forma escalável. Também oferece alta disponibilgidade e capacidade de escalabilidade horizontal, o que é importante para um sistema de ingressos que pode ter picos de tráfego em dias de shows populares.
 
 Tailwind CSS permite um design rápido e personalizável. Você pode criar interfaces responsivas e modernas sem a necessidade de escrever muito CSS customizado.
 
