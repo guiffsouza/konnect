@@ -1,6 +1,6 @@
 # Desafio 2: Compra de ingressos para show
 
-Desenvolver uma aplicação web que permita aos usuários comprar ingressos para um show. O show possui dois setores, com preços distintos: pista (sem reserva de lugar) e cadeira (com reserva do número da cadeira). A aplicação deve permitir ao usuário comprar quantos ingressos quiser, exibindo o valor total dos ingressos selecionados. A aplicação deve atualizar em tempo real a quantidade de ingressos disponíveis em cada setor, além de exibir as cadeiras já ocupadas e as cadeiras disponíveis para compra. Não é necessário desenvolver o fluxo de pagamento, apenas uma simulação de compra.
+Desenvolver uma aplicação web que permita aos usuários comprar ingressos para um show. O show possui dois setores, com preços distintos: pista (sem rgeserva de lugar) e cadeira (com reserva do número da cadeira). A aplicação deve permitir ao usuário comprar quantos ingressos quiser, exibindo o valor total dos ingressos selecionados. A aplicação deve atualizar em tempo real a quantidade de ingressos disponíveis em cada setor, além de exibir as cadeiras já ocupadas e as cadeiras disponíveis para compra. Não é necessário desenvolver o fluxo de pagamento, apenas uma simulação de compra.
 
 ## Decisões técnicas
 
@@ -24,6 +24,9 @@ Na raiz do projeto execute o comando abaixo:
 docker-compose up --build -d
 ```
 
+Acesse o client em: `http://localhost:3000` </br>
+Acesse a api em: `http://localhost:8000`
+
 ## Postman Collection
 
-Link com para o Postman [https://www.postman.com/solar-escape-339420/workspace/konnect/collection/17205015-e4fa994d-c592-480f-97c7-b2f016dffa15?action=share&creator=17205015](https://www.postman.com/solar-escape-339420/workspace/konnect/collection/17205015-e4fa994d-c592-480f-97c7-b2f016dffa15?action=share&creator=17205015)
+Link com para o Postman: [https://www.postman.com/solar-escape-339420/workspace/konnect/collection/17205015-e4fa994d-c592-480f-97c7-b2f016dffa15?action=share&creator=17205015](https://www.postman.com/solar-escape-339420/workspace/konnect/collection/17205015-e4fa994d-c592-480f-97c7-b2f016dffa15?action=share&creator=17205015)
