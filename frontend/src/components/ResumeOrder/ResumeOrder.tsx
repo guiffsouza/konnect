@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { api } from "@/api/api";
 import { useState } from "react";
 import { useStepContext } from "@/context/StepContext/useStep";
+import { AxiosError } from "axios";
 
 export function ResumeOrder() {
   const { cart, fetchApi } = useOrderContext();
@@ -14,20 +15,18 @@ export function ResumeOrder() {
       if (cart.ticketSeat.length > 0 || cart.ticketQueue.length > 0) {
         if (cart.ticketSeat.length > 0) {
           await api.put("ticket-seat", cart.ticketSeat);
-          setErrors([{ message: "" }]);
-          nextStep();
-          fetchApi();
-          return;
         }
 
         if (cart.ticketQueue.length > 0) {
-          console.log(cart.ticketQueue);
           await api.put("ticket-queue", cart.ticketQueue);
-          nextStep();
-          fetchApi();
-          return;
         }
+
+        setErrors([{ message: "" }]);
+        nextStep();
+        fetchApi();
+        return;
       }
+
       setErrors((prev) => {
         return [
           {
@@ -37,12 +36,19 @@ export function ResumeOrder() {
           },
         ];
       });
-    } catch (error: any) {
-      if (error?.response?.data?.message === "Seat unavailable") {
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError<{
+        message?: string;
+        response?: { error?: string[] };
+      }>;
+
+      if (axiosError.response?.data?.message === "Seat unavailable") {
         setErrors(() => {
-          return error?.response.data.response.error.map((err: any) => {
-            return { message: err };
-          });
+          return (axiosError?.response?.data.response?.error || []).map(
+            (err) => {
+              return { message: err };
+            }
+          );
         });
       }
     }
@@ -55,23 +61,23 @@ export function ResumeOrder() {
       </div>
 
       {errors.map((error, i) => (
-        <text key={i} className="mb-2 text-[#ff0000]">
+        <text key={`error-${i}`} className="mb-2 text-[#d22f2e]">
           {error.message}
         </text>
       ))}
 
       <div className="flex flex-col justify-between">
         <div className="flex flex-col items-start justify-around mb-4">
-          <text className="mb-4">Assentos selecionados</text>
+          <text className="mb-4 text-lg">Assentos selecionados</text>
           {cart.ticketSeat.length >= 1 ? (
-            <div className="flex flex-row flex-wrap h-[160px] overflow-y-scroll w-[100%] p-2 border-2 border-dashed">
+            <div className="flex flex-row items-center justify-center flex-wrap h-[160px] overflow-y-scroll w-[100%] p-2 border-2 border-dotted">
               {cart.ticketSeat.map((seat) => {
                 return (
                   <div
-                    id={seat.id}
-                    className="flex items-center flex-col justify-center}"
+                    key={seat.id}
+                    className="flex items-center flex-col pt-4 pr-4"
                   >
-                    <div className="pt-4 pr-4">
+                    <div>
                       <span
                         onClick={handleClick}
                         className="material-icons"
@@ -89,29 +95,29 @@ export function ResumeOrder() {
               })}
             </div>
           ) : (
-            <div className="h-[160px] w-[100%] flex justify-center items-center border-2 border-dashed">
+            <div className="h-[160px] w-[100%] flex justify-center items-center border-2 border-dotted">
               <text>Selecione os assentos</text>
             </div>
           )}
         </div>
 
-        <div className="flex flex-col items-start justify-around mb-8">
+        <div className="flex flex-col items-center justify-around mb-8">
           <div className="w-[100%]">
             <text className="mb-4">Pista selecionados</text>
             {cart.ticketQueue.length >= 1 ? (
-              <div className="flex flex-row flex-wrap h-[100px] overflow-y-scroll w-[100%] p-2 border-2 border-dashed">
-                {cart.ticketQueue.map((_) => (
+              <div className="flex flex-row flex-wrap justify-center items-center h-[100px] overflow-y-scroll w-[100%] p-2 border-2 border-dotted">
+                {cart.ticketQueue.map((ticket) => (
                   <span
+                    key={ticket.id}
                     className="material-symbols-outlined rotate-90"
                     style={{ fontSize: "32px" }}
-                    key={_.id}
                   >
                     confirmation_number
                   </span>
                 ))}
               </div>
             ) : (
-              <div className="h-[100px] w-[100%] flex justify-center items-center border-2 border-dashed">
+              <div className="h-[100px] w-[100%] flex justify-center items-center border-2 border-dotted">
                 <text>Selecione os tickets</text>
               </div>
             )}

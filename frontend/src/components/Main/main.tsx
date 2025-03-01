@@ -8,7 +8,8 @@ import { Payment } from "../Payment/Payment";
 
 export default function Main() {
   const { step } = useStepContext();
-  const steps = [<ResumeOrder />, <Payment />];
+
+  const steps = [<ResumeOrder key="resumeOrder" />, <Payment key="payment" />];
 
   return (
     <div className="w-full flex justify-center">

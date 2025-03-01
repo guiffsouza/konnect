@@ -6,6 +6,7 @@ const generateSeats = (): ITicketSeat[] => {
     id: (index + 1).toString(),
     position: (index + 1).toString(),
     selected: false,
+    sold: false,
     value: 200,
   }));
 };
@@ -16,6 +17,7 @@ const generateQueueTickets = (): ITicketQueue[] => {
   return Array.from({ length: 100 }, (_, index) => ({
     id: (index + 1).toString(),
     selected: false,
+    sold: false,
     value: 100,
   }));
 };

@@ -9,15 +9,18 @@ export function Seat({ id, position, value, selected, sold }: ITicketSeat) {
   };
 
   return (
-    <div id={id} className="flex items-center flex-col justify-center}">
-      <div className="pt-4 pr-4">
+    <div
+      id={id}
+      className="flex items-center flex-col justify-center pt-4 pr-4"
+    >
+      <div>
         {sold ? (
           <span
             onClick={handleClick}
             className="material-icons"
             style={{
               fontSize: "32px",
-              color: "red",
+              color: "#d22f2e",
               cursor: "pointer",
             }}
           >
@@ -37,7 +40,9 @@ export function Seat({ id, position, value, selected, sold }: ITicketSeat) {
           </span>
         )}
       </div>
-      <text className="text-lg">{position}</text>
+      <div>
+        <text className="text-lg">{position}</text>
+      </div>
     </div>
   );
 }
