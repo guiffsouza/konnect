@@ -8,9 +8,7 @@ import { TicketQueueModule } from './ticket-queue/ticket-queue.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb://admin:password@0.0.0.0:27017/konnect_db?authSource=admin',
-    ),
+    MongooseModule.forRoot(process.env.DATABASE_URL as string),
     GeneratorTicketsModule,
     TicketQueueModule,
     TicketSeatModule,

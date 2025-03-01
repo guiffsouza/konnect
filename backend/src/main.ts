@@ -8,6 +8,6 @@ async function bootstrap() {
   app.enableCors();
   const ticketsGenerator = app.get(GeneratorTicketsService);
   ticketsGenerator.generator();
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT || 8000);
 }
 bootstrap();
